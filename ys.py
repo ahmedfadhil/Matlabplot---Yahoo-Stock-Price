@@ -9,6 +9,7 @@ import time
 example = time.time()
 print(dt.datetime.fromtimestamp(example))
 
+
 def bytespdate2num(fmt, encoding='utf-8'):
     strconverter = mdates.strpdate2num(fmt)
 
@@ -46,8 +47,9 @@ def graph_data(stock):
     dateconv = np.vectorize(dt.datetime.fromtimestamp)
     date = dateconv(date)
 
-
     ax1.plot_date(date, closep, '-', label='Price')
+    ax1.plot([], [], linewidth=5, label='loss', color='r', alpha=0.5)
+    ax1.plot([], [], linewidth=5, label='gain', color='g', alpha=0.5)
     for label in ax1.xaxis.get_ticklabels():
         label.set_rotation(45)
 
@@ -59,6 +61,13 @@ def graph_data(stock):
     plt.show()
 
     ax1.grid(True, color='g', linestyle='-', linewidth=5)
+    ax1.xaxis.label.set_color('c')
+    ax1.yaxis.label.set_color('r')
+    ax1.set_yticks([0, 25, 50, 75, 100])
+    ax1.fill_between(date, closep, closep[0], where=(closep > closep[0]), facecolor='g', alpha=0.3)
+    ax1.fill_between(date, closep, closep[0], where=(closep < closep[0]), facecolor='r', alpha=0.3)
+    # ax1.fill_between(date,closep,0, alpha = 0.3)
 
 
-graph_data('TSLA')
+graph_data('EBAY')
+# graph_data('TSLA')
